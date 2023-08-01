@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version "7.0.0"
+}
+
+group 'com.cofe'
+version '1.0-SNAPSHOT'
+
+def launcherClassName = "io.vertx.core.Launcher"
+def mainVerticleName = "com.cafe.Server"
+
+application {
+    mainClass = launcherClassName
+}
+
+shadowJar {
+    classifier = 'fat'
+    manifest {
+        attributes 'Main-Verticle':mainVerticleName
+    }
+    mergeServiceFiles {
+        include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'io.vertx:vertx-core:4.3.7'
+    implementation 'io.vertx:vertx-web:4.3.7'
+
+}
+
+//test {
+//    useJUnitPlatform()
+//}
+
+/*
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+tasks.withType(Javadoc) {
+    options.encoding = "UTF-8"
+}*/
